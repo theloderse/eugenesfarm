@@ -1,0 +1,10 @@
+{
+  "Name": "EugenesFarm",
+  "Author": "Faith Elliott",
+  "Version": "1.0.0",
+  "Description": "My initial mod project - for my son, eugene.",
+  "UniqueID": "faith.EugenesFarm",
+  "EntryDll": "EugenesFarm.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": []
+}
