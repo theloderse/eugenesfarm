@@ -19,7 +19,7 @@ Welcome! This is the first mod test for Eugene's Farm mods in Stardew Valley. ^.
 ## Useful Links
 
 - [Stardew Valley Wiki: Modding Docs](https://stardewvalleywiki.com/Modding:Index)
-
+- [JSON ASSETS](https://www.nexusmods.com/stardewvalley/mods/1720?tab=description) - allows for custom json content. used this for "furniture"
 ---
 
 ## Installing the Mod
