@@ -9,7 +9,7 @@ using EugenesFarm.Player;
 namespace EugenesFarm
 {
     /// <summary>The mod entry point.</summary>
-    internal sealed class ModEntry : Mod
+    public sealed class ModEntry : Mod
     {
         private PlayerMoveText? moveText;
 
@@ -20,11 +20,53 @@ namespace EugenesFarm
         /// <param name="helper">Provides simplified APIs for writing mods.</param>
         public override void Entry(IModHelper helper)
         {
+            helper.Events.GameLoop.DayStarted += OnDayStarted;
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
             moveText = new PlayerMoveText(helper);
 
         }
 
+        private void OnDayStarted(object? sender, DayStartedEventArgs e)
+        {
+            this.Monitor.Log("OnDayStarted triggered.", LogLevel.Info);
+
+            var home = Game1.getLocationFromName("FarmHouse");
+            if (home != null)
+            {
+                this.Monitor.Log("FarmHouse found.", LogLevel.Info);
+
+                var furnitureId = GetFurnitureId("Eugene Sprite");
+                this.Monitor.Log($"Furniture ID for 'Eugene Sprite': {furnitureId}", LogLevel.Info);
+
+                if (furnitureId != -1)
+                {
+                    var furniture = new StardewValley.Objects.Furniture("Eugene Sprite", new Vector2(2, 2));
+                    home.furniture.Add(furniture);
+                    this.Monitor.Log("Furniture placed in farmhouse.", LogLevel.Info);
+                }
+                else
+                {
+                    this.Monitor.Log("Furniture ID not found. Is Json Assets loaded and your content pack installed?", LogLevel.Warn);
+                }
+            }
+            else
+            {
+                this.Monitor.Log("FarmHouse not found.", LogLevel.Warn);
+            }
+        }
+
+        // Helper to get the furniture ID from Json Assets
+        public int GetFurnitureId(string name)
+        {
+            var ja = Helper.ModRegistry.GetApi<IJsonAssetsApi>("spacechase0.JsonAssets");
+            return ja?.GetFurnitureId(name) ?? -1;
+        }
+
+        // Interface for Json Assets API
+        public interface IJsonAssetsApi
+        {
+            int GetFurnitureId(string name);
+        }
 
         /*********
         ** Private methods

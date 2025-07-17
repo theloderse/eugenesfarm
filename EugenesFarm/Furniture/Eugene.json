@@ -1,0 +1,9 @@
+{
+  "Name": "Eugene Sprite",
+  "Description": "A cute decorative item of baby eugene.",
+  "Type": "Furniture",
+  "Price": 500,
+  "FurnitureType": "decor",
+  "Texture": "./eugene.png",
+  "PlacementTiles": "Any"
+}
