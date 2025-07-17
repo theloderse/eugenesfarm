@@ -23,8 +23,9 @@ namespace EugenesFarm
             helper.Events.GameLoop.DayStarted += OnDayStarted;
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
             moveText = new PlayerMoveText(helper);
-
         }
+
+        
 
         private void OnDayStarted(object? sender, DayStartedEventArgs e)
         {
@@ -56,16 +57,10 @@ namespace EugenesFarm
         }
 
         // Helper to get the furniture ID from Json Assets
-        public int GetFurnitureId(string name)
+        private int GetFurnitureId(string name)
         {
-            var ja = Helper.ModRegistry.GetApi<IJsonAssetsApi>("spacechase0.JsonAssets");
+            StardewModdingAPI.IJsonAssetsApi? ja = this.Helper.ModRegistry.GetApi<StardewModdingAPI.IJsonAssetsApi>("spacechase0.JsonAssets");
             return ja?.GetFurnitureId(name) ?? -1;
-        }
-
-        // Interface for Json Assets API
-        public interface IJsonAssetsApi
-        {
-            int GetFurnitureId(string name);
         }
 
         /*********
