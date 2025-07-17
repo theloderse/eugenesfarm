@@ -3,7 +3,9 @@
   "Description": "A cute decorative item of baby eugene.",
   "Type": "Furniture",
   "Price": 500,
-  "FurnitureType": "decor",
-  "Texture": "./eugene.png",
-  "PlacementTiles": "Any"
-}
+  "type": "decorative",
+  "Texture": "assets/Eugene.png",
+    "Width": 1,
+    "Height": 1,
+    "Rotations": 1
+  }

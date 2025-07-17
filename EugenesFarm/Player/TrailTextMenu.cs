@@ -13,26 +13,29 @@ namespace EugenesFarm.Player
         private readonly ClickableComponent toggleButton;
 
         public TrailTextMenu(PlayerMoveText parent)
-            : base(Game1.viewport.Width / 2 - 150, Game1.viewport.Height / 2 - 50, 300, 100)
+            : base(Game1.viewport.Width / 2 - 150, Game1.viewport.Height / 2 - 100, 300, 220)
         {
             this.parent = parent;
+
             textBox = new TextBox(Game1.content.Load<Texture2D>("LooseSprites\\textBox"), null, Game1.smallFont, Game1.textColor)
             {
                 X = this.xPositionOnScreen + 20,
-                Y = this.yPositionOnScreen + 20,
+                Y = this.yPositionOnScreen + 60,
                 Width = 260,
                 Text = parent.customTrailText
             };
+            textBox.Selected = true;
             Game1.keyboardDispatcher.Subscriber = textBox;
 
             toggleButton = new ClickableComponent(
-                new Rectangle(this.xPositionOnScreen + 20, this.yPositionOnScreen + 160, 120, 40),
+                new Rectangle(this.xPositionOnScreen + 90, this.yPositionOnScreen + 140, 120, 40),
                 "toggleTrail"
             );
         }
 
         public override void draw(SpriteBatch b)
         {
+            // Background box
             IClickableMenu.drawTextureBox(
                 b,
                 this.xPositionOnScreen,
@@ -42,17 +45,18 @@ namespace EugenesFarm.Player
                 Color.White
             );
 
-            base.draw(b);
-            textBox.Draw(b);
-
-            SpriteText.drawStringWithScrollBackground(
+            // Title
+            SpriteText.drawStringHorizontallyCenteredAt(
                 b,
                 "Edit Trail Text:",
-                this.xPositionOnScreen + 20,
-                this.yPositionOnScreen - 100
+                this.xPositionOnScreen + this.width / 2,
+                this.yPositionOnScreen + 20
             );
 
-            string toggleLabel = parent.TrailEnabled ? "Trail: ON" : "Trail: OFF";
+            // Textbox
+            textBox.Draw(b);
+
+            // Toggle Button background
             IClickableMenu.drawTextureBox(
                 b,
                 toggleButton.bounds.X,
@@ -61,7 +65,15 @@ namespace EugenesFarm.Player
                 toggleButton.bounds.Height,
                 parent.TrailEnabled ? Color.LimeGreen : Color.Red
             );
-            SpriteText.drawString(b, toggleLabel, toggleButton.bounds.X + 10, toggleButton.bounds.Y + 10);
+
+            // Toggle Button label
+            string toggleLabel = parent.TrailEnabled ? "Trail: ON" : "Trail: OFF";
+            SpriteText.drawStringHorizontallyCenteredAt(
+                b,
+                toggleLabel,
+                toggleButton.bounds.X + toggleButton.bounds.Width / 2,
+                toggleButton.bounds.Y + 10
+            );
 
             drawMouse(b);
         }
@@ -82,21 +94,21 @@ namespace EugenesFarm.Player
         {
             if (Game1.keyboardDispatcher.Subscriber == textBox)
             {
-                if (key == Microsoft.Xna.Framework.Input.Keys.Enter)
+                if (key == Microsoft.Xna.Framework.Input.Keys.Enter ||
+                    key == Microsoft.Xna.Framework.Input.Keys.Escape)
                 {
                     parent.SetCustomTrailText(textBox.Text);
                     Game1.exitActiveMenu();
+                    return;
                 }
 
                 // Prevent menu from closing on E while typing
-                // potentially other keys? not sure yet will have to test
                 if (key == Microsoft.Xna.Framework.Input.Keys.E)
                     return;
             }
-            else
-            {
-                base.receiveKeyPress(key);
-            }
+
+            base.receiveKeyPress(key);
         }
+
     }
 }

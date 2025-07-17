@@ -1,0 +1,10 @@
+{
+  "Name": "Eugene's Custom Furniture",
+  "Author": "YourName",
+  "Description": "Adds Eugene Sprite furniture using Custom Furniture.",
+  "Version": "1.0.0",
+  "UniqueID": "YourName.EugenesCustomFurniture",
+  "ContentPackFor": {
+    "UniqueID": "Platonymous.CustomFurniture"
+  }
+}
