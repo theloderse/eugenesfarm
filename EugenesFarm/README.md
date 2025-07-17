@@ -14,6 +14,8 @@ Welcome! This is the first mod test for Eugene's Farm mods in Stardew Valley. ^.
   The mod loader for Stardew Valley  
   [SMAPI](https://smapi.io/)
 
+- **Other Mods**
+  Other mods for this mod to run (havent narrowed down the specifics yet just included my folder of mods for now)
 ---
 
 ## Useful Links
