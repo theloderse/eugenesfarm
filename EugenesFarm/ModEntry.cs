@@ -4,12 +4,15 @@ using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using StardewValley;
+using EugenesFarm.Player;
 
 namespace EugenesFarm
 {
     /// <summary>The mod entry point.</summary>
     internal sealed class ModEntry : Mod
     {
+        private PlayerMoveText? moveText;
+
         /*********
         ** Public methods
         *********/
@@ -18,6 +21,8 @@ namespace EugenesFarm
         public override void Entry(IModHelper helper)
         {
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
+            moveText = new PlayerMoveText(helper);
+
         }
 
 

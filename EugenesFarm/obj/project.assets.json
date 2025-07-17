@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net9.0": {
+    "net6.0": {
       "Pathoschild.Stardew.ModBuildConfig/4.4.0": {
         "type": "package",
         "build": {
@@ -33,7 +33,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net9.0": [
+    "net6.0": [
       "Pathoschild.Stardew.ModBuildConfig >= 4.4.0"
     ]
   },
@@ -53,14 +53,14 @@
         "C:\\Users\\milkg\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "net9.0"
+        "net6.0"
       ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "projectReferences": {}
         }
       },
@@ -77,8 +77,8 @@
       "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
-      "net9.0": {
-        "targetAlias": "net9.0",
+      "net6.0": {
+        "targetAlias": "net6.0",
         "dependencies": {
           "Pathoschild.Stardew.ModBuildConfig": {
             "target": "Package",
@@ -101,7 +101,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

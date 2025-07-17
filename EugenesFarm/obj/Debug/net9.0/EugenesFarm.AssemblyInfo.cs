@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EugenesFarm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+107568d640c201e88f8a37f7ff6ef00bae892f18")]
 [assembly: System.Reflection.AssemblyProductAttribute("EugenesFarm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EugenesFarm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
