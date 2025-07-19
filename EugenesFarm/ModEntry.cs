@@ -36,9 +36,7 @@ namespace EugenesFarm
             {
                 this.Monitor.Log("FarmHouse found.", LogLevel.Info);
 
-                var furniture = new StardewValley.Objects.Furniture("Eugene Sprite", new Vector2(1, 8));
-                home.furniture.Add(furniture);
-                this.Monitor.Log("Furniture placed in farmhouse.", LogLevel.Info);
+
             }
             else
             {
