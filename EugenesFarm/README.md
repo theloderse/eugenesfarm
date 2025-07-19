@@ -16,6 +16,7 @@ Welcome! This is the first mod test for Eugene's Farm mods in Stardew Valley. ^.
 
 - **Other Mods**
   Other mods for this mod to run (havent narrowed down the specifics yet just included my folder of mods for now)
+`https://www.dropbox.com/scl/fi/rh1ib9bjsr0vy6gk8n9kt/Mods.zip?rlkey=jtvuq9te8p06w9i1st6y8nwmi&st=djq4wegj&dl=0`
 ---
 
 ## Useful Links

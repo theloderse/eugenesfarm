@@ -5,6 +5,10 @@ All updates to the mods will be noted in this file
 ---
 
 ## [Unreleased]
+- Added "rainbow" trail
+- Added menu toggle to switch from text to rainbow
+- Added a popup bubble when walking next to npcs
+- Improved trail edit menu to be formatted nicer
 
 ## [1.0.0] - 2025-07-16
 - First commit created
