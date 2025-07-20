@@ -1,0 +1,53 @@
+{
+  "Format": "1.27.0",
+  "Changes": [
+    {
+      "Action": "EditData",
+      "Target": "Characters/Names",
+      "Entries": {
+        "Linus": "Josh"
+      }
+    },
+    {
+      "Action": "EditData",
+      "Target": "Characters/Dialogue/Linus",
+      "Entries": {
+        "Introduction": "Are you door dash, i dun' want it less its free, toobz.",
+        "Rainy": "Rain brings magic to the cobra den toobz.",
+        "Mon": "Monday wisdom: Magic is everywhere. Buy my etsy wands.",
+        "Tue": "Tuesday: I am casting my dark magic on jessica BOYYYYYLEEE.",
+        "Wed": "Wednesday: Jessica Boyyyyyle cant resist my great dick.",
+        "Thu": "Thursday: My mead is brewing nicely.",
+        "Fri": "Friday: The weekend approaches, tubes. Dont forget to buy your tactical soap with code kingcobra.",
+        "Sat": "Saturday: Time for a food hack toobz.",
+        "Sun": "Sunday: Reflect on your feminist society opinions.",
+        "Spring_1": "Spring begins, tactical soap is a must to attract the ladies.",
+        "Summer_1": "Summer heat fuels my album making.",
+        "Fall_1": "Jessica boyle needs to stay away from casper.",
+        "Winter_1": "Winter chills, but jessica chills me more.",
+        "Rainy_Night": "Night rain and my dark magic is especially powerful.",
+        "default": "Greetings, tubes. i Own my trolls life.",
+        "event": "Jessica BOOYYYLEEE can fuck right off.",
+        "marriage_Mon": "Monday with my spouse, my magic is stronger.",
+        "marriage_Tue": "Tuesday: We make mead together.",
+        "marriage_Wed": "Wednesday: Knowledge is power.",
+        "marriage_Thu": "Thursday: Brewing potions as a team.",
+        "marriage_Fri": "Friday: Lets go to the cemetary today and brew up some dark magic against the trolls.",
+        "marriage_Sat": "Saturday: Im going to make you a dank food hack tonight.",
+        "marriage_Sun": "Sunday: lets go to an ozzy concert.",
+        "marriage_default": "Hello, tubes. My hot goth girlfriend jessica boyle is jealous of  welcome you."
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Characters/Linus",
+      "FromFile": "assets/jfsDefault.png"
+    },
+    {
+      "Action": "Load",
+      "Target": "Portraits/Linus",
+      "FromFile": "assets/jfsProfile.png"
+    }
+  ],
+  "EnableDebugFeatures": true
+}

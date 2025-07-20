@@ -1,0 +1,10 @@
+{
+  "Name": "My Wizard Edit",
+  "Author": "faith elliott",
+  "Version": "1.0.0",
+  "Description": "Changes Wizard's sprite, name, and dialog.",
+  "UniqueID": "felliott.MyWizardEdit",
+  "ContentPackFor": {
+    "UniqueID": "Pathoschild.ContentPatcher"
+  }
+}

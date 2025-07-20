@@ -22,10 +22,10 @@ namespace EugenesFarm
         {
             helper.Events.GameLoop.DayStarted += OnDayStarted;
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
-            moveText = new PlayerMoveText(helper);
+            moveText = new PlayerMoveText(helper, this.Monitor);
         }
 
-        
+
 
         private void OnDayStarted(object? sender, DayStartedEventArgs e)
         {
@@ -36,19 +36,7 @@ namespace EugenesFarm
             {
                 this.Monitor.Log("FarmHouse found.", LogLevel.Info);
 
-                var furnitureId = GetFurnitureId("Eugene Sprite");
-                this.Monitor.Log($"Furniture ID for 'Eugene Sprite': {furnitureId}", LogLevel.Info);
 
-                if (furnitureId != -1)
-                {
-                    var furniture = new StardewValley.Objects.Furniture("Eugene Sprite", new Vector2(2, 2));
-                    home.furniture.Add(furniture);
-                    this.Monitor.Log("Furniture placed in farmhouse.", LogLevel.Info);
-                }
-                else
-                {
-                    this.Monitor.Log("Furniture ID not found. Is Json Assets loaded and your content pack installed?", LogLevel.Warn);
-                }
             }
             else
             {
@@ -57,11 +45,6 @@ namespace EugenesFarm
         }
 
         // Helper to get the furniture ID from Json Assets
-        private int GetFurnitureId(string name)
-        {
-            StardewModdingAPI.IJsonAssetsApi? ja = this.Helper.ModRegistry.GetApi<StardewModdingAPI.IJsonAssetsApi>("spacechase0.JsonAssets");
-            return ja?.GetFurnitureId(name) ?? -1;
-        }
 
         /*********
         ** Private methods
@@ -71,12 +54,21 @@ namespace EugenesFarm
         /// <param name="e">The event data.</param>
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
         {
-            // ignore if player hasn't loaded a save yet
             if (!Context.IsWorldReady)
                 return;
 
-            // print button presses to the console window
+            // Log player position when F3 is pressed
+            if (e.Button == SButton.F3)
+            {
+
+                int x = (int)Game1.player.Tile.X;
+                int y = (int)Game1.player.Tile.Y;
+                this.Monitor.Log($"Player tile position: X={x}, Y={y}", LogLevel.Info);
+            }
+
+            // Existing debug log
             this.Monitor.Log($"{Game1.player.Name} pressed {e.Button}.", LogLevel.Debug);
         }
     }
+
 }
