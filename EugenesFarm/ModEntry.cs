@@ -22,7 +22,7 @@ namespace EugenesFarm
         {
             helper.Events.GameLoop.DayStarted += OnDayStarted;
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
-            moveText = new PlayerMoveText(helper);
+            moveText = new PlayerMoveText(helper, this.Monitor);
         }
 
 
