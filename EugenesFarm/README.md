@@ -39,10 +39,14 @@ Welcome! This is the first mod test for Eugene's Farm mods in Stardew Valley. ^.
 - Customizable and an on/off toggle for a walking trail text effect for your character
 ![alt text](assets/image.png)
 
+- Trail menu contains options
+![alt text](assets/trailmenu.png)
+
 -  walking trail rainbow effect for your character
 ![alt text](assets/rainbowTrail.png)
 
-- walking trail star effect for your character
+- walking trail star/galaxy effect for your character. twinkles and spins
+![alt text](assets/startrail.png)
 
 - NPC edit of linus dialogs/profile/and sprite (TODO: make wizard)
 ![alt text](assets/jfs.jpg)
