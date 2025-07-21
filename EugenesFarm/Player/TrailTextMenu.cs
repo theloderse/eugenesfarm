@@ -18,7 +18,7 @@ namespace EugenesFarm.Player
         private int selectedTrailType = 0;
 
         public TrailTextMenu(PlayerMoveText parent)
-            : base(Game1.viewport.Width / 2 - 250, Game1.viewport.Height / 2 - 200, 500, 450)
+            : base(Game1.uiViewport.Width / 2 - 250, Game1.uiViewport.Height / 2 - 225, 500, 450)
         {
             this.parent = parent;
 
@@ -142,14 +142,6 @@ namespace EugenesFarm.Player
                 toggleButton.bounds.Width,
                 toggleButton.bounds.Height,
                 buttonColor
-            );
-
-            string toggleLabel = parent.TrailEnabled ? "Trail: ON" : "Trail: OFF";
-            SpriteText.drawStringHorizontallyCenteredAt(
-                b,
-                toggleLabel,
-                toggleButton.bounds.X - 30 + toggleButton.bounds.Width / 2,
-                toggleButton.bounds.Y - 5
             );
 
             drawMouse(b);

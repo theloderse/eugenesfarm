@@ -18,12 +18,11 @@ namespace EugenesFarm.Player
         private readonly IModHelper helper;
         private readonly IMonitor monitor;
         private readonly List<TextParticle> particles = new();
-        private readonly List<SpeechBubble> speechBubbles = new();
+        private readonly SpeechBubbleManager speechBubbleManager = new();
         private readonly RainbowTrail rainbowTrail = new();
         private int trailIndex = 0;
         private readonly string[] trailText = new[] { "B", "r", "r" };
         private int spawnCooldown = 0;
-        private int speechCooldown = 0;
         private readonly Random rand = new Random();
 
         private StarTrail? starTrail;
@@ -119,14 +118,6 @@ namespace EugenesFarm.Player
                 {
                     rainbowTrail.Update();
                 }
-                else if (CurrentTrailType == TrailType.Star)
-                {
-                    // currently just draws on top of player, need to update like other trails
-                    var worldPos = Game1.player.Position;
-                    var screenPos = Game1.GlobalToLocal(worldPos);
-                    starTrail.AddStar(screenPos);
-                    spawnCooldown = 8;
-                }
             }
             else if (spawnCooldown > 0)
             {
@@ -140,25 +131,7 @@ namespace EugenesFarm.Player
                     particles.RemoveAt(i);
             }
 
-            if (speechCooldown <= 0 && IsPlayerNearNPC())
-            {
-                speechBubbles.Add(new SpeechBubble(
-                    "Hey, I'm walking here!",
-                    0f
-                ));
-                speechCooldown = 300;
-            }
-            else if (speechCooldown > 0)
-            {
-                speechCooldown--;
-            }
-
-            for (int i = speechBubbles.Count - 1; i >= 0; i--)
-            {
-                speechBubbles[i].Update();
-                if (speechBubbles[i].IsDead)
-                    speechBubbles.RemoveAt(i);
-            }
+            speechBubbleManager.Update(IsPlayerNearNPC());
 
             if (TrailEnabled && CurrentTrailType == TrailType.Rainbow)
             {
@@ -166,7 +139,7 @@ namespace EugenesFarm.Player
             }
             if (TrailEnabled && CurrentTrailType == TrailType.Star && starTrail != null)
             {
-                starTrail.Update(Game1.currentGameTime);
+                starTrail.Update(Game1.currentGameTime, Game1.player.isMoving(), Game1.player.Position, Game1.player.FacingDirection);
             }
         }
 
@@ -201,97 +174,7 @@ namespace EugenesFarm.Player
                 }
             }
 
-            foreach (var bubble in speechBubbles)
-            {
-                var playerWorldPos = Game1.player.Position + new Vector2(0, -80);
-                var screenPos = Game1.GlobalToLocal(playerWorldPos);
-
-                var font = Game1.smallFont;
-                var color = Color.Black;
-                var scale = bubble.Scale * 0.7f;
-                var alpha = bubble.Alpha;
-
-                var textSize = font.MeasureString(bubble.Text) * scale;
-                var padding = 8f;
-
-                var bubbleWidth = textSize.X + padding * 2;
-                var bubbleHeight = textSize.Y + padding * 2;
-                var bubbleX = screenPos.X - bubbleWidth / 2;
-                var bubbleY = screenPos.Y - bubbleHeight - bubble.VerticalOffset;
-
-                var cloudColor = Color.White * alpha;
-                var centerX = screenPos.X;
-                var centerY = bubbleY + bubbleHeight / 2;
-
-                var circleRadius = Math.Max(bubbleWidth, bubbleHeight) / 6;
-                var circles = new[]
-                {
-                    new Vector2(centerX - bubbleWidth/4, centerY),
-                    new Vector2(centerX + bubbleWidth/4, centerY),
-                    new Vector2(centerX, centerY - bubbleHeight/6),
-                    new Vector2(centerX, centerY + bubbleHeight/6),
-                    new Vector2(centerX, centerY), // Center (largest)
-                };
-
-                for (int i = 0; i < circles.Length; i++)
-                {
-                    var circle = circles[i];
-                    var radius = (i == 4) ? circleRadius * 1.1f : circleRadius * (0.8f + (i % 2) * 0.1f); // Smaller variations
-
-                    for (int x = (int)(circle.X - radius); x <= circle.X + radius; x++)
-                    {
-                        for (int y = (int)(circle.Y - radius); y <= circle.Y + radius; y++)
-                        {
-                            float distance = Vector2.Distance(new Vector2(x, y), circle);
-                            if (distance <= radius)
-                            {
-                                var pixelRect = new Rectangle(x, y, 1, 1);
-                                spriteBatch.Draw(Game1.staminaRect, pixelRect, cloudColor);
-                            }
-                        }
-                    }
-                }
-
-                var tailY = centerY + bubbleHeight / 2;
-                var tailSteps = 2;
-                for (int i = 0; i < tailSteps; i++)
-                {
-                    var progress = (float)i / (tailSteps - 1);
-                    var tailX = centerX - 4 + progress * 8;
-                    var tailYPos = tailY + progress * 12;
-                    var tailRadius = (tailSteps - i) * 3;
-
-                    for (int x = (int)(tailX - tailRadius); x <= tailX + tailRadius; x++)
-                    {
-                        for (int y = (int)(tailYPos - tailRadius); y <= tailYPos + tailRadius; y++)
-                        {
-                            float distance = Vector2.Distance(new Vector2(x, y), new Vector2(tailX, tailYPos));
-                            if (distance <= tailRadius)
-                            {
-                                var pixelRect = new Rectangle(x, y, 1, 1);
-                                spriteBatch.Draw(Game1.staminaRect, pixelRect, cloudColor);
-                            }
-                        }
-                    }
-                }
-
-                var textPos = new Vector2(
-                    centerX - textSize.X / 2,
-                    centerY - textSize.Y / 2
-                );
-
-                spriteBatch.DrawString(
-                    font,
-                    bubble.Text,
-                    textPos,
-                    color * alpha,
-                    0f,
-                    Vector2.Zero,
-                    scale,
-                    SpriteEffects.None,
-                    1f
-                );
-            }
+            speechBubbleManager.Render(spriteBatch);
 
             if (TrailEnabled && CurrentTrailType == TrailType.Rainbow)
             {
@@ -393,26 +276,6 @@ namespace EugenesFarm.Player
             }
 
             return false;
-        }
-
-        private class SpeechBubble
-        {
-            public string Text { get; }
-            public float Age { get; private set; }
-            public float Scale => MathHelper.Clamp(1f + (float)Math.Sin(Age * 3f) * 0.1f, 0.9f, 1.1f);
-            public float Alpha => MathHelper.Clamp(1f - Age / 3f, 0f, 1f);
-            public float VerticalOffset => (float)Math.Sin(Age * 2f) * 5f;
-            public bool IsDead => Age > 3f;
-            public SpeechBubble(string text, float age)
-            {
-                Text = text;
-                Age = age;
-            }
-
-            public void Update()
-            {
-                Age += 0.025f;
-            }
         }
     }
 }

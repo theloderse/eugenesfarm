@@ -3,8 +3,11 @@
 All updates to the mods will be noted in this file 
 
 ---
+## [UNRELEASED]
+- Star trail is now bigger and doenst stick to player
+- More trail menu improvements
 
-## [Unreleased]
+## [1.0.1]
 - Added "rainbow" trail
 - Added menu toggle to switch from text to rainbow
 - Added a popup bubble when walking next to npcs
