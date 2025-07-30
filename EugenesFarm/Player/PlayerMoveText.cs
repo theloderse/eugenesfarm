@@ -27,7 +27,7 @@ namespace EugenesFarm.Player
         private readonly Random rand = new Random();
 
         private StarTrail? starTrail;
-        private Texture2D[] starTextures;
+        private Texture2D?[] starTextures;
 
         public PlayerMoveText(IModHelper helper, IMonitor monitor)
         {
@@ -38,7 +38,7 @@ namespace EugenesFarm.Player
             helper.Events.Display.RenderedWorld += OnRenderedWorld;
             helper.Events.Input.ButtonPressed += OnButtonPressed;
 
-            starTextures = new Texture2D[5];
+            starTextures = new Texture2D?[5];
             for (int i = 0; i < 5; i++)
             {
                 string assetRelativePath = $"galaxyTrailAssets/star{i + 1}.png";
@@ -62,7 +62,8 @@ namespace EugenesFarm.Player
             }
             else
             {
-                starTrail = new StarTrail(starTextures);
+                var nonNullTextures = starTextures.Where(t => t != null).Cast<Texture2D>().ToArray();
+                starTrail = new StarTrail(nonNullTextures);
             }
         }
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)

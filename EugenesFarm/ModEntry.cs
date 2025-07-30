@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
@@ -23,7 +25,93 @@ namespace EugenesFarm
             helper.Events.GameLoop.DayStarted += OnDayStarted;
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
             moveText = new PlayerMoveText(helper, this.Monitor);
+            
+            helper.Events.Content.AssetRequested += this.OnAssetRequested;
+            helper.Events.Display.MenuChanged += this.OnMenuChanged;        
+            }
+
+  
+        private void OnMenuChanged(object? sender, StardewModdingAPI.Events.MenuChangedEventArgs e)
+        {
+            if (e.NewMenu is StardewValley.Menus.TitleMenu titleMenu)
+            {
+                this.Monitor.Log("Title screen detected - you could modify it here", LogLevel.Debug);
+            }
         }
+
+   private void OnAssetRequested(object? sender, AssetRequestedEventArgs e)
+{
+    if (e.DataType == typeof(Texture2D))
+    {
+        this.Monitor.Log($"Texture requested: {e.Name}", LogLevel.Info);
+    }
+
+    // Try multiple possible logo locations
+    var logoAssets = new[]
+    {
+        "LooseSprites/logo",
+        "TitleScreen",
+        "LooseSprites/titleLogo", 
+        "Minigames/TitleButtons",
+        "LooseSprites/Cursors"
+    };
+
+    foreach (var logoAsset in logoAssets)
+    {
+        if (e.NameWithoutLocale.IsEquivalentTo(logoAsset))
+        {
+            this.Monitor.Log($"FOUND LOGO ASSET: {logoAsset}", LogLevel.Info);
+
+            e.Edit(asset =>
+            {
+                var texture = asset.AsImage();
+                this.Monitor.Log($"{logoAsset} dimensions: {texture.Data.Width}x{texture.Data.Height}", LogLevel.Info);
+                
+                try
+                {
+                    var customTitleImage = this.Helper.ModContent.Load<Texture2D>("assets/titlescreen.png");
+                    this.Monitor.Log($"Custom image loaded: {customTitleImage.Width}x{customTitleImage.Height}", LogLevel.Info);
+
+                    if (logoAsset == "LooseSprites/Cursors")
+                    {
+                        int logoWidth = Math.Min(customTitleImage.Width, 174);
+                        int logoHeight = Math.Min(customTitleImage.Height, 64);
+                        
+                        texture.PatchImage(
+                            source: customTitleImage,
+                            sourceArea: new Rectangle(0, 0, logoWidth, logoHeight),
+                            targetArea: new Rectangle(0, 192, logoWidth, logoHeight)
+                        );
+                        this.Monitor.Log($"Patched Cursors at (0,192) with size {logoWidth}x{logoHeight}", LogLevel.Info);
+                    }
+                    else
+                    {
+                        int width = Math.Min(customTitleImage.Width, texture.Data.Width);
+                        int height = Math.Min(customTitleImage.Height, texture.Data.Height);
+
+                        texture.PatchImage(
+                            source: customTitleImage,
+                            sourceArea: new Rectangle(0, 0, width, height),
+                            targetArea: new Rectangle(0, 0, width, height)
+                        );
+                        this.Monitor.Log($"Patched {logoAsset} with size {width}x{height}", LogLevel.Info);
+                    }
+
+                    this.Monitor.Log($"Successfully replaced logo in {logoAsset}!", LogLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    this.Monitor.Log($"Failed to patch {logoAsset}: {ex.Message}", LogLevel.Warn);
+                }
+            });
+        }
+    }
+
+    if (e.Name.Name.ToLower().Contains("title") || e.Name.Name.ToLower().Contains("logo"))
+    {
+        this.Monitor.Log($"POTENTIAL TITLE/LOGO ASSET: {e.Name}", LogLevel.Info);
+    }
+}
 
 
 
