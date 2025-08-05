@@ -12,6 +12,7 @@ All updates to the mods will be noted in this file
 - removed custom furniture as well as JSON assets, no longer supported
 - added npc customization (currently linus as JFS, going to be wizard)
 - added basic star trail
+- somewhat patched over title screen with "Eugenes Farm" title
 
 ## [1.0.0] - 2025-07-16
 - First commit created

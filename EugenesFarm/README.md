@@ -36,6 +36,9 @@ Welcome! This is the first mod test for Eugene's Farm mods in Stardew Valley. ^.
 
 
 **Current Features:**
+- new title asset patch, still a bit janky trying to find out exact specifications.
+![alt text](assets/titlescreenscreenshot.png)
+
 - Customizable and an on/off toggle for a walking trail text effect for your character
 ![alt text](assets/image.png)
 
